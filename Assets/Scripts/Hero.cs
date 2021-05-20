@@ -81,10 +81,14 @@ public class Hero : MonoBehaviour
             return;
         }
 
-        if(other.gameObject.tag == "Enemy")
+        if(other.gameObject.CompareTag("Enemy"))
         {
             ShieldLevel--;
             Destroy(other.gameObject);
+        }
+        else if(other.gameObject.CompareTag("PowerUp"))
+        {
+            AbsorbPowerUp(other.gameObject);
         }
         else
         {
@@ -92,6 +96,18 @@ public class Hero : MonoBehaviour
         }
     }
 
+
+    private void AbsorbPowerUp(GameObject go)
+    {
+        // Нечеловеческий костыль 
+        CubeHelper cubeHelper = go.GetComponent<CubeHelper>();
+        switch (cubeHelper.pw.type)
+        {
+            
+        }
+        cubeHelper.pw.AbsorbedBy(gameObject);
+    }
+    
     private void TempFire()
     {
         GameObject projGO = Instantiate<GameObject>(projectilePrefab);
