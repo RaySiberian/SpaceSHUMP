@@ -224,8 +224,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 10
   fireRate: 10
-  heath: 10
+  heath: 1
   score: 100
+  showDamageDuration: 0.1
+  powerUpDropChance: 1
+  originalColors: []
+  materials: []
+  showingDamage: 0
+  notifiedOfDestruction: 0
+  damageDoneTime: 0
 --- !u!114 &-1131232618609717338
 MonoBehaviour:
   m_ObjectHideFlags: 0

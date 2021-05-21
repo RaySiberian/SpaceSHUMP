@@ -11,7 +11,8 @@ public class Enemy : MonoBehaviour
     public float heath = 10f; 
     public int score = 100; // Очков за уничтожения
     public float showDamageDuration = 0.1f;
-
+    public float powerUpDropChance = 1f;
+    
     [Header("Set in Dynamically: Enemy")] 
     public Color[] originalColors;
     public Material[] materials;
@@ -77,6 +78,12 @@ public class Enemy : MonoBehaviour
                 Destroy(otherGO);
                 if (heath <= 0)
                 {
+                    if (!notifiedOfDestruction)
+                    {
+                        Main.S.ShipDestroyed(this);
+                    }
+
+                    notifiedOfDestruction = true;
                     Destroy(gameObject);
                 }
                 break;

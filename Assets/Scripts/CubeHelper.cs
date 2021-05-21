@@ -7,10 +7,10 @@ public class CubeHelper : MonoBehaviour
 {
     // Тут нарушены все пародигмы ООП
     public GameObject mainObj;
-    public PowerUP pw;
+    public PowerUP pu;
     
     private void Start()
     {
-        pw = mainObj.GetComponent<PowerUP>();
+        pu = mainObj.GetComponent<PowerUP>();
     }
 }

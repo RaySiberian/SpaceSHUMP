@@ -13,14 +13,17 @@ public class Main : MonoBehaviour
     public float enemySpawnPerSecond = 0.5f;
     public float enemyDefaultPadding = 1.5f;// Отступ для корректировки позиционирования
     public WeaponDefinition[] weaponDefinitions;
-
+    public GameObject prefabPowerUp;
+    public WeaponType[] powerUpFrequency = new WeaponType[]
+        {WeaponType.blaster, WeaponType.blaster, WeaponType.spread, WeaponType.shield};
+    
     private BoundCheck bndCheck;
 
     private void Awake()
     {
         S = this;
         bndCheck = GetComponent<BoundCheck>();
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
+        Invoke(nameof(SpawnEnemy), 1f / enemySpawnPerSecond);
         weaponDict = new Dictionary<WeaponType, WeaponDefinition>();
         
         foreach (WeaponDefinition definition in weaponDefinitions)
@@ -47,12 +50,27 @@ public class Main : MonoBehaviour
         pos.y = bndCheck.camHeight + enemyPadding + 20;
         go.transform.position = pos;
 
-        Invoke("SpawnEnemy", 1f / enemySpawnPerSecond);
+        Invoke(nameof(SpawnEnemy), 1f / enemySpawnPerSecond);
+    }
+
+    public void ShipDestroyed(Enemy e)
+    {
+        if (Random.value <= e.powerUpDropChance)
+        {
+            int ndx = Random.Range(0, powerUpFrequency.Length);
+            WeaponType puType = powerUpFrequency[ndx];
+            
+            GameObject go = Instantiate(prefabPowerUp) as GameObject;
+            PowerUP pu = go.GetComponent<PowerUP>();
+            pu.SetType(puType);
+
+            pu.transform.position = e.transform.position;
+        }
     }
     
     public void DelayRestart()
     {
-        Invoke("Restart", 2);
+        Invoke(nameof(Restart), 2);
     }
     
     public void Restart()
