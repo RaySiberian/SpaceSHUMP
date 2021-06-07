@@ -12,7 +12,6 @@ public class Hero : MonoBehaviour
     [Header("Set in Inspector")]
     // Поля управляющие караблем 
     public float speed = 30;
-
     public float rollMuilt = -45;
     public float pitchMult = 30;
 
@@ -20,7 +19,6 @@ public class Hero : MonoBehaviour
     private float _shieldLevel = 1;
 
     public delegate void WeaponFireDelegate();
-
     public WeaponFireDelegate fireDelegate;
 
     private GameObject lastTriggerGO = null;
@@ -28,6 +26,8 @@ public class Hero : MonoBehaviour
     public float projectileSpeed = 40f;
     public Weapon[] weapons;
 
+    private AudioSource _shotSound;
+    
     public float ShieldLevel
     {
         get => _shieldLevel;
@@ -54,6 +54,7 @@ public class Hero : MonoBehaviour
             Debug.LogError("Hero.Awake");
         }
 
+        _shotSound = GetComponent<AudioSource>();
         ClearWeapons();
         weapons[0].SetType(WeaponType.blaster);
         //fireDelegate += TempFire;
@@ -165,5 +166,20 @@ public class Hero : MonoBehaviour
         {
             weapon.SetType(WeaponType.none);
         }
+    }
+
+    private void PlaySoundShot()
+    {
+        _shotSound.Play();
+    }
+    
+    private void OnEnable()
+    {
+        Weapon.Fired += PlaySoundShot;
+    }
+    
+    private void OnDisable()
+    {
+        Weapon.Fired -= PlaySoundShot;
     }
 }

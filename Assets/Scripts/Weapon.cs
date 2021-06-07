@@ -42,6 +42,8 @@ public class Weapon : MonoBehaviour
     public float lastShotTime;
     private Renderer _collarRend;
 
+    public static event Action Fired;
+    
     public WeaponType Type
     {
         get => type;
@@ -52,6 +54,7 @@ public class Weapon : MonoBehaviour
     {
         collar = transform.Find("Collar").gameObject;
         _collarRend = collar.GetComponent<Renderer>();
+        
 
         SetType(type);
 
@@ -113,6 +116,7 @@ public class Weapon : MonoBehaviour
             case WeaponType.blaster:
                 projectile = MakeProjectile();
                 projectile.rb.velocity = vel;
+                Fired?.Invoke();
                 break;
             
             case WeaponType.spread:
@@ -126,6 +130,7 @@ public class Weapon : MonoBehaviour
                 projectile = MakeProjectile();
                 projectile.transform.rotation = Quaternion.AngleAxis(-10, Vector3.back);
                 projectile.rb.velocity = projectile.transform.rotation * vel;
+                Fired?.Invoke();
                 break;
         }
     }
