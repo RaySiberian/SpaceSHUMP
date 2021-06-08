@@ -78,7 +78,7 @@ public class Main : MonoBehaviour
     
     public void Restart()
     {
-        SceneManager.LoadScene("_Scene_0");
+        SceneManager.LoadScene(0);
     }
 
     public static WeaponDefinition GetWeaponDefinition(WeaponType wt)
