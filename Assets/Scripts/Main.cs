@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Main : MonoBehaviour
 {
     public static Main S; // ЫЫЫЫ
     private static Dictionary<WeaponType, WeaponDefinition> weaponDict;
-    
+    public Text scoreToDisplay;
+
     [Header("Set in Inspector")]
     public GameObject[] prefabEnemies;
     public float enemySpawnPerSecond = 0.5f;
@@ -70,6 +72,7 @@ public class Main : MonoBehaviour
     
     public void DelayRestart()
     {
+        //scoreToDisplay.text = "Score: 0";
         Invoke(nameof(Restart), 2);
     }
     

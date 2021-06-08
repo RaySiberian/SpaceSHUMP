@@ -27,6 +27,8 @@ public class Hero : MonoBehaviour
     public Weapon[] weapons;
 
     private AudioSource _shotSound;
+
+    public static event Action<int> died;  
     
     public float ShieldLevel
     {
@@ -37,7 +39,9 @@ public class Hero : MonoBehaviour
             _shieldLevel = Mathf.Min(value, 4);
             if (value < 0)
             {
-                Destroy(this.gameObject);
+                died?.Invoke(1);
+                Destroy(gameObject);
+                Score.AddScore();
                 Main.S.DelayRestart();
             }
         }
@@ -89,6 +93,7 @@ public class Hero : MonoBehaviour
         if (other.gameObject.CompareTag("Enemy"))
         {
             ShieldLevel--;
+            Score.AddScore();
             Destroy(other.gameObject);
         }
         else if (other.gameObject.CompareTag("PowerUp"))

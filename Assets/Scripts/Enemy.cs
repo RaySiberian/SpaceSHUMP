@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public float damageDoneTime;
 
     protected BoundCheck bndCheck;
-
+    
     protected Vector3 Pos { get => transform.position; set => transform.position = value; }
 
     private void Awake()
@@ -72,6 +72,7 @@ public class Enemy : MonoBehaviour
                 Destroy(otherGO);
                 if (heath <= 0)
                 {
+                    Score.AddScore();
                     if (!notifiedOfDestruction)
                     {
                         Main.S.ShipDestroyed(this);
